@@ -32,3 +32,7 @@
 *.app
 
 *.json
+
+**/build/
+**/install/
+**/log/
