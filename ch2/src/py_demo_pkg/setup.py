@@ -21,6 +21,9 @@ setup(
     entry_points={
         'console_scripts': [
             'py_node = py_demo_pkg.py_node:main',
+            'person_node = py_demo_pkg.person_node:main',
+            'writer_node = py_demo_pkg.writer_node:main',
+            'thread_node = py_demo_pkg.learn_thread:main'
         ],
     },
 )
