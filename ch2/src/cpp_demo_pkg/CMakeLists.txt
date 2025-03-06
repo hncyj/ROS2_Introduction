@@ -11,20 +11,20 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-find_package(
-    rclcpp REQUIRED
-)
+find_package(rclcpp REQUIRED)
+
+include_directories(include)
 
 add_executable(
-    cpp_node src/cpp_node.cpp
+    thread_node src/learn_thread.cpp
 )
 
-ament_target_dependencies(
-    cpp_node rclcpp
-)
+# ament_target_dependencies(
+#     thread_node rclcpp
+# )
 
 install(
-    TARGETS cpp_node
+    TARGETS thread_node
     DESTINATION lib/${PROJECT_NAME}
 )
 
