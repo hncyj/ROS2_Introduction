@@ -36,3 +36,9 @@
 **/build/
 **/install/
 **/log/
+
+*.txt
+
+/CloudPoint
+
+**/test/
