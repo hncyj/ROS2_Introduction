@@ -46,6 +46,3 @@ def main(args=None):
     face_detect_client = FaceDetectClient()
     face_detect_client.send_request()
     rclpy.shutdown()
-    
-        
-        
