@@ -10,6 +10,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name + '/launch', ['launch/tf_launch.py']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -20,6 +21,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'static_tf_broadcaster=py_demo_tf.static_tf_broadcaster:main',
+            'dynamic_tf_broadcaster=py_demo_tf.dynamic_tf_broadcaster:main',
+            'tf_listener=py_demo_tf.tf_listener:main'
         ],
     },
 )
