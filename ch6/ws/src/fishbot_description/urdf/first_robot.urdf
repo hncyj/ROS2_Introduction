@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot name="first_robot">
+    <!-- robot body -->
+    <link name="base_link">
+        <!-- 部件外观描述 -->
+        <visual>
+            <!-- 沿自己几何中心的欧式变换 -->
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <!-- 几何形状 -->
+            <geometry>
+                <!-- 圆柱体, 半径为 0.10m, 高度为 0.12m -->
+                <cylinder radius="0.10" length="0.12"/>
+            </geometry>
+            <!-- 材质子标签 -->
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 0.5"/>
+            </material>
+        </visual>
+    </link>
+
+    <!-- IMU -->
+    <link name="imu_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.02 0.02 0.02"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 0.5"/>
+            </material>
+        </visual>
+    </link>
+
+    <!-- 机器人关节 -->
+    <joint name="imu_joint" type="fixed">
+        <!-- 父部件 -->
+        <parent link="base_link"/>
+        <!-- 子部件 -->
+        <child link="imu_link"/>
+        <!-- 子部件相对于父部件的欧式变换 -->
+        <origin xyz="0.0 0.0 0.3" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+</robot>
