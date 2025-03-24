@@ -10,7 +10,7 @@
             <geometry>
                 <!-- 圆柱体, 半径为 0.10m, 高度为 0.12m -->
                 <cylinder radius="0.10" length="0.12"/>
-            </geometry>
+            </geometry> 
             <!-- 材质子标签 -->
             <material name="white">
                 <color rgba="1.0 1.0 1.0 0.5"/>
@@ -38,7 +38,7 @@
         <!-- 子部件 -->
         <child link="imu_link"/>
         <!-- 子部件相对于父部件的欧式变换 -->
-        <origin xyz="0.0 0.0 0.3" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.03" rpy="0.0 0.0 0.0"/>
     </joint>
 
 </robot>
