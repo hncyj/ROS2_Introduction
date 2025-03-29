@@ -7,7 +7,8 @@ import os
 
 def generate_launch_description():
     urdf_tutorial_path = get_package_share_directory('fishbot_description')
-    default_model_path = os.path.join(urdf_tutorial_path, 'urdf', 'first_robot.urdf')
+    default_model_path = os.path.join(urdf_tutorial_path, 'urdf', 'first_robot.urdf.xacro')
+    default_rviz_config_path = os.path.join(urdf_tutorial_path, '/config/rviz/display_model.rviz')
 
     action_declare_arg_model_path = launch.actions.DeclareLaunchArgument(
         name='model', default_value=str(default_model_path),
@@ -34,7 +35,8 @@ def generate_launch_description():
 
     rviz_node = launch_ros.actions.Node(
         package='rviz2',
-        executable='rviz2'
+        executable='rviz2',
+        arguments=['-d', default_rviz_config_path]
     )
 
     return launch.LaunchDescription(
