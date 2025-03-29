@@ -29,7 +29,7 @@
             </material>
         </link>
 
-        <joint name="{imu_name}_joint" type="fixed">
+        <joint name="${imu_name}_joint" type="fixed">
             <parent link="base_link"/>
             <child link="${imu_name}_link"/>
             <origin xyz="${xyz}"/>

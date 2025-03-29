@@ -5,7 +5,7 @@
     <xacro:include filename="$(find fishbot_description)/urdf/fishbot/sensor/laser.urdf.xacro"/>
     <xacro:include filename="$(find fishbot_description)/urdf/fishbot/sensor/camera.urdf.xacro"/>
     
-    <xacro:base_xacro length="0.12" radius="0.1">
+    <xacro:base_xacro length="0.12" radius="0.1"/>
     <xacro:imu_xacro xyz="0 0 0.02"/>
     <xacro:laser_xacro xyz="0 0 0.10"/>
     <xacro:camera_xacro xyz="0.10 0 0.075"/>
