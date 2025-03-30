@@ -31,5 +31,13 @@
             <origin xyz="${xyz}"/>
             <axis xyz="0.0 0.0 0.0"/>
         </joint>
+
+        <gazebo reference="${caster_name}_caster_link">
+            <!-- 切向摩擦系数、 法向摩擦系数、接触刚度系数、阻尼系数 -->
+            <mu1 value="0.0"/>
+            <mu2 value="0.0"/>
+            <kp value="1000000000.0"/>
+            <kd value="1.0"/>
+        </gazebo>
     </xacro:macro>
 </robot>

@@ -31,5 +31,13 @@
             <origin xyz="${xyz}"/>
             <axis xyz="0.0 1.0 0.0"/>
         </joint>
+
+        <gazebo reference="${wheel_name}_wheel_link">
+            <!-- 切向摩擦系数、 法向摩擦系数、接触刚度系数、阻尼系数 -->
+            <mu1 value="20.0"/>
+            <mu2 value="20.0"/>
+            <kp value="1000000000.0"/>
+            <kd value="1.0"/>
+        </gazebo>
     </xacro:macro>
 </robot>
