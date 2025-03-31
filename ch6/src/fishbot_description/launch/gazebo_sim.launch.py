@@ -10,17 +10,17 @@ import launch_ros.parameter_descriptions
 def generate_launch_description():
     robot_name_in_model = "fishbot"
     urdf_tutorial_path = get_package_share_directory('fishbot_description')
-    default_model_path = os.path.join(urdf_tutorial_path, '/urdf/fishbot/fishbot.urdf.xacro')
-    default_world_path = os.path.join(urdf_tutorial_path, '/world/custom_room.world')
+    default_model_path = os.path.join(urdf_tutorial_path, 'urdf', 'fishbot', 'fishbot.urdf.xacro')
+    default_world_path = os.path.join(urdf_tutorial_path, 'world', 'custom_room.world')
     
-    action_declare_arg_mode_path = launch.actions.DeclarelaunchArgument(
-        name='model', defalut_value=str(default_model_path),
+    action_declare_arg_mode_path = launch.actions.DeclareLaunchArgument(
+        name='model', default_value=str(default_model_path),
         description='urdf absolute path'
     )
     
     robot_description = launch_ros.parameter_descriptions.ParameterValue(
         launch.substitutions.Command(
-            ['xacro ', launch.substitutions.launchConfiguration('model')]
+            ['xacro ', launch.substitutions.LaunchConfiguration('model')]
         ),
         value_type=str
     )
@@ -41,7 +41,7 @@ def generate_launch_description():
     spawn_entity_node = launch_ros.actions.Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=['topic', '/robot_description', '-entity', robot_name_in_model, ]
+        arguments=['-topic', '/robot_description', '-entity', robot_name_in_model, ]
     )
     
     return launch.LaunchDescription(
