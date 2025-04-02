@@ -6,7 +6,6 @@ from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 import launch_ros.parameter_descriptions
 
-
 def generate_launch_description():
     robot_name_in_model = "fishbot"
     urdf_tutorial_path = get_package_share_directory('fishbot_description')
@@ -44,8 +43,19 @@ def generate_launch_description():
         arguments=['-topic', '/robot_description', '-entity', robot_name_in_model, ]
     )
     
+    load_joint_state_controller = launch.actions.ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active', 'fishbot_joint_state_broadcaster'],
+        output='screen'
+    )
+    
     return launch.LaunchDescription(
         [
+            launch.actions.RegisterEventHandler(
+                event_handler=launch.event_handlers.OnProcessExit(
+                    target_action=spawn_entity_node,
+                    on_exit=[load_joint_state_controller],
+                )  
+            ),
             action_declare_arg_mode_path,
             robot_state_publisher_node,
             launch_gazebo,
