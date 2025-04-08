@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
             'init_pose_node = fishbot_application.init_robot_pose:main',
             'get_pose_node = fishbot_application.get_robot_pose:main',
-            'nav_pose_node = fishbot_application.nav_to_pose:main'
+            'nav_pose_node = fishbot_application.nav_to_pose:main',
+            'waypoint_follwer = fishbot_application.waypoint_follwer:main'
         ],
     },
 )
