@@ -11,7 +11,7 @@ class PatrolNode(BasicNavigator):
     def __init__(self, node_name='patrol_node'):
         super().__init__(node_name)
         self.declare_parameter('initial_point', [0.0, 0.0, 0.0])
-        self.declare_parameter('target_point', [0.0, 0.0, 0.0, 1.0, 1.0, 1.57])
+        self.declare_parameter('target_points', [0.0, 0.0, 0.0, 1.0, 1.0, 1.57])
         self.initial_point_ = self.get_parameter('initial_point').value
         self.target_points_ = self.get_parameter('target_points').value
         self.buffer_ = Buffer()
@@ -70,7 +70,7 @@ class PatrolNode(BasicNavigator):
                 self.get_logger().info(f"Expect Duration: {Duration.from_msg(feedback.estimated_time_remaining).nanoseconds / 1e9} seconds")
         
         result = self.getResult()
-        if result == TaskResult.SUCCESS:
+        if result == TaskResult.SUCCEEDED:
             self.get_logger().info("Navigation to target pose succeeded")
         elif result == TaskResult.CANCELED:
             self.get_logger().warn("Navigation to target pose canceled")
