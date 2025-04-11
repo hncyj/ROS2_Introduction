@@ -1,0 +1,9 @@
+patrol_node:
+  ros_parameters:
+   initial_point: [0.0, 0.0, 0.0]
+   target_points:[
+      1.0, 0.0, 0.0,
+      1.0, 1.0, 0.0,
+      0.0, 1.0, 0.0,
+      0.0, 0.0, 0.0
+   ]
