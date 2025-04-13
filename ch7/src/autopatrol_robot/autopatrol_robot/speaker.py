@@ -11,7 +11,7 @@ class Speaker(Node):
         self.speaker.voice = 'en'
         
     def speak_text_callback(self, request, response):
-        self.get_logger().info(f"Speaking: {request.text}")
+        self.get_logger().info(f"{request.text}")
         self.speaker.say(request.text)
         text = request.text
         self.speaker.say(text)

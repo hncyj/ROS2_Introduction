@@ -8,6 +8,9 @@ from rclpy.duration import Duration
 
 from autopatrol_interfaces.srv import SpeachText
 
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+import cv2
 
 class PatrolNode(BasicNavigator):
     def __init__(self, node_name='patrol_node'):
@@ -19,6 +22,49 @@ class PatrolNode(BasicNavigator):
         self.buffer_ = Buffer()
         self.listener_ = TransformListener(self.buffer_, self)
         self.speach_client_ = self.create_client(SpeachText, 'speech_text')
+        
+        # save img
+        self.declare_parameter('image_save_path', '')
+        self.image_save_path = self.get_parameter('image_save_path').value
+        self.bridge = CvBridge()
+        self.latest_image = None
+        self.subscription_image = self.create_subscription(
+            Image, '/camera_sensor/image_raw', self.image_callback, 10
+        )
+        
+    def image_callback(self, msg):
+        self.latest_image = msg
+        
+    def record_image(self):
+        if self.latest_image is not None:
+            try:
+                pose = self.get_current_pose()
+                cv_image = self.bridge.imgmsg_to_cv2(self.latest_image)
+                
+                import os
+                save_path = self.image_save_path
+                
+                if not save_path:
+                    save_path = os.path.join(os.getcwd(), "patrol_images")
+                    self.get_logger().warn(f"No image_save_path specified, using default: {save_path}")
+                
+                os.makedirs(save_path, exist_ok=True)
+                
+                if not save_path.endswith('/') and not save_path.endswith('\\'):
+                    save_path = save_path + '/'
+                    
+                filename = f"{save_path}image_{pose.translation.x:3.2f}_{pose.translation.y:3.2f}.png"
+                success = cv2.imwrite(filename, cv_image)
+                
+                if success:
+                    self.get_logger().info(f"Image saved to {filename}")
+                else:
+                    self.get_logger().error(f"Failed to write image to {filename}")
+                    
+            except Exception as e:
+                self.get_logger().error(f"Error in record_image: {e}")
+        else:
+            self.get_logger().warn("No image available to save")
         
     def speach_text(self, text):
         while not self.speach_client_.wait_for_service(timeout_sec=1.0):
@@ -138,9 +184,8 @@ def main():
             target_pose = patrol.get_pose_by_xyyaw(x, y, yaw)
             patrol.speach_text(text=f"Going to point {x}, {y}, {yaw}")
             patrol.nav_to_pose(target_pose)
+            patrol.speach_text(text=f"Arrive at target pos: {x}, {y}, {yaw}, ready for record image.")
+            patrol.record_image()
+            patrol.speach_text(text=f"image record!")
             
     rclpy.shutdown()
-    
-    
-    
-    
