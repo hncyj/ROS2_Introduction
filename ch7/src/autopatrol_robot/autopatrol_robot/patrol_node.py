@@ -6,6 +6,8 @@ from tf2_ros import TransformListener, Buffer
 from tf_transformations import euler_from_quaternion, quaternion_from_euler
 from rclpy.duration import Duration
 
+from autopatrol_interfaces.srv import SpeachText
+
 
 class PatrolNode(BasicNavigator):
     def __init__(self, node_name='patrol_node'):
@@ -16,6 +18,26 @@ class PatrolNode(BasicNavigator):
         self.target_points_ = self.get_parameter('target_points').value
         self.buffer_ = Buffer()
         self.listener_ = TransformListener(self.buffer_, self)
+        self.speach_client_ = self.create_client(SpeachText, 'speech_text')
+        
+    def speach_text(self, text):
+        while not self.speach_client_.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('Waiting for speech service...')
+            
+        request = SpeachText.Request()
+        request.text = text
+        future = self.speach_client_.call_async(request)
+        rclpy.spin_until_future_complete(self, future)
+        
+        if future.result() is not None:
+            result = future.result().result
+            if result:
+                self.get_logger().info(f"Speech result: {result}")
+            else:
+                self.get_logger().error("Failed to speak text")
+        
+        else:
+            self.get_logger().error("Service call failed")
             
     def get_pose_by_xyyaw(self, x, y, yaw):
         """
@@ -105,15 +127,20 @@ class PatrolNode(BasicNavigator):
 def main():
     rclpy.init()
     patrol = PatrolNode()
+    patrol.speach_text(text="initial pose .........")
     patrol.init_robot_pose()
+    patrol.speach_text(text="initial pose done !!!!")
     
     while rclpy.ok():
         points = patrol.get_target_points()
         for point in points:
             x, y, yaw = point[0], point[1], point[2]
             target_pose = patrol.get_pose_by_xyyaw(x, y, yaw)
+            patrol.speach_text(text=f"Going to point {x}, {y}, {yaw}")
             patrol.nav_to_pose(target_pose)
             
     rclpy.shutdown()
+    
+    
     
     
