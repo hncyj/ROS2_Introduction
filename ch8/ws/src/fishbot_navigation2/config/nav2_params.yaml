@@ -139,7 +139,10 @@ controller_server:
       yaw_goal_tolerance: 0.15
     # DWB parameters
     FollowPath:
-      plugin: "dwb_core::DWBLocalPlanner"
+      # plugin: "dwb_core::DWBLocalPlanner"
+      plugin: "nav2_custom_controller::nav2_custom_controller"
+      max_linear_speed: 0.1
+      max_angular_speed: 1.0
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0

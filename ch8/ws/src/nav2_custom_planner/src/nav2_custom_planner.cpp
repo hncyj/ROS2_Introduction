@@ -8,7 +8,7 @@
 
 namespace nav2_custom_planner {
     void  CustomPlanner::configure(
-    const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent, std::string name,
+    const rclcpp_lifecycle::LifecycleNode::WeakPtr& parent, std::string name,
     std::shared_ptr<tf2_ros::Buffer> tf,
     std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros) {
         this->tf_ = tf;
@@ -36,7 +36,7 @@ namespace nav2_custom_planner {
         // TODO
     };
 
-    nav_msgs::msg::Path CustomPlanner::createPlan(const geometry_msgs::msg::PoseStamped & start, const geometry_msgs::msg::PoseStamped & goal) {
+    nav_msgs::msg::Path CustomPlanner::createPlan(const geometry_msgs::msg::PoseStamped& start, const geometry_msgs::msg::PoseStamped& goal) {
         RCLCPP_INFO(node_->get_logger(), "Creating plan from %s to %s", this->name_.c_str(), this->name_.c_str());
         // init global_path
         nav_msgs::msg::Path global_path;
