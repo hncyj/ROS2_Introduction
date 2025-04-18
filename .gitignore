@@ -39,7 +39,7 @@
 
 *.txt
 
-/CloudPoint
+# /CloudPoint
 
 **/test/
 
