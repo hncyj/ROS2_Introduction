@@ -1,9 +1,8 @@
+import os
 import launch
 import launch_ros
-from ament_index_python.packages import get_package_share_directory
 import launch_ros.parameter_descriptions
-import os
-
+from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     urdf_tutorial_path = get_package_share_directory('fishbot_description')
